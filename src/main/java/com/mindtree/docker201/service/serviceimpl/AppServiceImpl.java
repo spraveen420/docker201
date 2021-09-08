@@ -1,6 +1,7 @@
-package com.mindtree.docker201.service.serviceImpl;
+package com.mindtree.docker201.service.serviceimpl;
 
 import java.util.List;
+import java.util.Optional;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
@@ -30,7 +31,12 @@ public class AppServiceImpl implements AppService {
 	@Override
 	public ResponseEntity<Data> getOneUser(int id) {
 		if (repo.existsById(id)) {
-			return new ResponseEntity<>(repo.findById(id).orElse(null), HttpStatus.OK);
+			Optional<Data> user = repo.findById(id);
+			if(user.isPresent()) {
+				return new ResponseEntity<>(user.get(), HttpStatus.OK);
+			} else {
+				return new ResponseEntity<>(null, HttpStatus.BAD_REQUEST);
+			}
 		} else {
 			return new ResponseEntity<>(null, HttpStatus.BAD_REQUEST);
 		}

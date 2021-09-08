@@ -10,6 +10,18 @@ public class Data {
 	private int id;
 	private String name;
 	private int age;
+	
+
+	public Data() {
+		super();
+	}
+
+	public Data(int id, String name, int age) {
+		super();
+		this.id = id;
+		this.name = name;
+		this.age = age;
+	}
 
 	public int getId() {
 		return id;
