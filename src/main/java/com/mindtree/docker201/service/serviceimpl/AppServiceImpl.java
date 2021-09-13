@@ -27,7 +27,7 @@ public class AppServiceImpl implements AppService {
 	@Override
 	public ResponseEntity<String> addUser(Data user) {
 		if (repo.existsById(user.getId())) {
-			logging.log(new Timestamp(new Date().getTime()).toString(), "User already exist with id " + user.getId());
+			logging.genLog("error", "User already exist with id " + user.getId());
 			return new ResponseEntity<>("Can't able to add, user already exist", HttpStatus.CONFLICT);
 		} else {
 			repo.save(user);
@@ -40,14 +40,15 @@ public class AppServiceImpl implements AppService {
 	public ResponseEntity<Data> getOneUser(int id) {
 		if (repo.existsById(id)) {
 			Optional<Data> user = repo.findById(id);
-			logging.log(new Timestamp(new Date().getTime()).toString(), "Found user with id " + id);
 			if(user.isPresent()) {
+				logging.log(new Timestamp(new Date().getTime()).toString(), "Found user with id " + id);
 				return new ResponseEntity<>(user.get(), HttpStatus.OK);
 			} else {
+				logging.genLog("error", "User doesn't exist with id " + id);
 				return new ResponseEntity<>(null, HttpStatus.BAD_REQUEST);
 			}
 		} else {
-			logging.log(new Timestamp(new Date().getTime()).toString(), "User doesn't exist with id " + id);
+			logging.genLog("error", "User doesn't exist with id " + id);
 			return new ResponseEntity<>(null, HttpStatus.BAD_REQUEST);
 		}
 	}
@@ -65,7 +66,7 @@ public class AppServiceImpl implements AppService {
 			logging.log(new Timestamp(new Date().getTime()).toString(), "Deleted user with id " + id);
 			return new ResponseEntity<>("User removed successfully", HttpStatus.OK);
 		} else {
-			logging.log(new Timestamp(new Date().getTime()).toString(), "User doesn't exist with id " + id);
+			logging.genLog("error", "User doesn't exist with id " + id);
 			return new ResponseEntity<>("Can't able to delete, user not exist", HttpStatus.BAD_REQUEST);
 		}
 	}
@@ -77,7 +78,7 @@ public class AppServiceImpl implements AppService {
 			logging.log(new Timestamp(new Date().getTime()).toString(), "Updated user with id " + user.getId());
 			return new ResponseEntity<>("User detail updated successfully", HttpStatus.OK);
 		} else {
-			logging.log(new Timestamp(new Date().getTime()).toString(), "User doesn't exist with id " + user.getId());
+			logging.genLog("error", "User doesn't exist with id " + user.getId());
 			return new ResponseEntity<>("Can't able to update, user not exist", HttpStatus.BAD_REQUEST);
 		}
 	}

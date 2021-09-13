@@ -54,6 +54,7 @@ public class Docker201ServiceImplTests {
 	public void addUserTest() {
 		when(repoTest.existsById(user.getId())).thenReturn(true);
 		doNothing().when(logger).log(Mockito.anyString(), Mockito.anyString());
+		doNothing().when(logger).genLog(Mockito.anyString(), Mockito.anyString());
 		assertEquals("Can't able to add, user already exist", servImplTest.addUser(user).getBody().toString());
 		assertEquals(409, servImplTest.addUser(user).getStatusCodeValue());
 	}
@@ -63,6 +64,7 @@ public class Docker201ServiceImplTests {
 		when(repoTest.existsById(user.getId())).thenReturn(false);
 		when(repoTest.save(user)).thenReturn(user);
 		doNothing().when(logger).log(Mockito.anyString(), Mockito.anyString());
+		doNothing().when(logger).genLog(Mockito.anyString(), Mockito.anyString());
 		assertEquals("User added successfully", servImplTest.addUser(user).getBody().toString());
 		assertEquals(200, servImplTest.addUser(user).getStatusCodeValue());
 	}
@@ -72,6 +74,7 @@ public class Docker201ServiceImplTests {
 		when(repoTest.existsById(user.getId())).thenReturn(true);
 		when(repoTest.findById(user.getId())).thenReturn(Optional.of(user));
 		doNothing().when(logger).log(Mockito.anyString(), Mockito.anyString());
+		doNothing().when(logger).genLog(Mockito.anyString(), Mockito.anyString());
 		assertEquals("Sample", servImplTest.getOneUser(1).getBody().getName());
 		assertEquals(200, servImplTest.getOneUser(1).getStatusCodeValue());
 	}
@@ -81,6 +84,7 @@ public class Docker201ServiceImplTests {
 		when(repoTest.existsById(user.getId())).thenReturn(true);
 		when(repoTest.findById(user.getId())).thenReturn(Optional.empty());
 		doNothing().when(logger).log(Mockito.anyString(), Mockito.anyString());
+		doNothing().when(logger).genLog(Mockito.anyString(), Mockito.anyString());
 		assertEquals(null, servImplTest.getOneUser(1).getBody());
 		assertEquals(400, servImplTest.getOneUser(1).getStatusCodeValue());
 	}
@@ -89,6 +93,7 @@ public class Docker201ServiceImplTests {
 	public void getOneUserTest1() {
 		when(repoTest.existsById(user.getId())).thenReturn(false);
 		doNothing().when(logger).log(Mockito.anyString(), Mockito.anyString());
+		doNothing().when(logger).genLog(Mockito.anyString(), Mockito.anyString());
 		assertEquals(null, servImplTest.getOneUser(1).getBody());
 		assertEquals(400, servImplTest.getOneUser(1).getStatusCodeValue());
 	}
@@ -98,6 +103,7 @@ public class Docker201ServiceImplTests {
 		users = setUsersList();
 		when(repoTest.findAll()).thenReturn(users);
 		doNothing().when(logger).log(Mockito.anyString(), Mockito.anyString());
+		doNothing().when(logger).genLog(Mockito.anyString(), Mockito.anyString());
 		assertEquals(3, servImplTest.getAllUsers().getBody().size());
 		assertEquals(200, servImplTest.getAllUsers().getStatusCodeValue());
 	}
@@ -107,6 +113,7 @@ public class Docker201ServiceImplTests {
 		when(repoTest.existsById(user.getId())).thenReturn(true);
 		doNothing().when(repoTest).deleteById(Mockito.anyInt());
 		doNothing().when(logger).log(Mockito.anyString(), Mockito.anyString());
+		doNothing().when(logger).genLog(Mockito.anyString(), Mockito.anyString());
 		assertEquals("User removed successfully", servImplTest.deleteUser(user.getId()).getBody().toString());
 		assertEquals(200, servImplTest.deleteUser(user.getId()).getStatusCodeValue());
 	}
@@ -115,6 +122,7 @@ public class Docker201ServiceImplTests {
 	public void deleteUserTest1() {
 		when(repoTest.existsById(user.getId())).thenReturn(false);
 		doNothing().when(logger).log(Mockito.anyString(), Mockito.anyString());
+		doNothing().when(logger).genLog(Mockito.anyString(), Mockito.anyString());
 		assertEquals("Can't able to delete, user not exist", servImplTest.deleteUser(user.getId()).getBody().toString());
 		assertEquals(400, servImplTest.deleteUser(user.getId()).getStatusCodeValue());
 	}
@@ -123,6 +131,7 @@ public class Docker201ServiceImplTests {
 	public void updateUserTest() {
 		when(repoTest.existsById(user.getId())).thenReturn(false);
 		doNothing().when(logger).log(Mockito.anyString(), Mockito.anyString());
+		doNothing().when(logger).genLog(Mockito.anyString(), Mockito.anyString());
 		assertEquals("Can't able to update, user not exist", servImplTest.updateUser(user).getBody().toString());
 		assertEquals(400, servImplTest.updateUser(user).getStatusCodeValue());
 	}
@@ -132,6 +141,7 @@ public class Docker201ServiceImplTests {
 		when(repoTest.existsById(user.getId())).thenReturn(true);
 		when(repoTest.save(user)).thenReturn(user);
 		doNothing().when(logger).log(Mockito.anyString(), Mockito.anyString());
+		doNothing().when(logger).genLog(Mockito.anyString(), Mockito.anyString());
 		assertEquals("User detail updated successfully", servImplTest.updateUser(user).getBody().toString());
 		assertEquals(200, servImplTest.updateUser(user).getStatusCodeValue());
 	}
